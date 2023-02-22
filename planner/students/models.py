@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
 class students(models.Model):  # проблема с отображением назавания таблицы (в конце автоматом ставит S)
     name = models. CharField('ФИО', max_length=100)
     group = models.CharField('Группа', max_length=10)  # нужно ли ссылаться на таблицу groups через столбик group_id?
@@ -22,4 +21,3 @@ class groups(models.Model):
 
 from django.db import models
 
-# Create your models here.
