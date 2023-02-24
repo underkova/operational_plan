@@ -5,9 +5,8 @@ class students(models.Model):  # проблема с отображением н
     name = models. CharField('ФИО', max_length=100)
     group = models.CharField('Группа', max_length=10)  # нужно ли ссылаться на таблицу groups через столбик group_id?
 
-
-def _str_(self):
-    return self.name
+    def _str_(self):
+        return self.name
 
 
 class Meta:
@@ -19,5 +18,4 @@ class groups(models.Model):
     group_number = models.CharField('Номер группы', max_length=10)
 
 
-from django.db import models
 
