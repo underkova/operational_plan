@@ -8,8 +8,8 @@ def about (request):
     return HttpResponse('description page')
 
 def students (request):
-    return HttpResponse('planner.html') # здесь вернет шаблон
+    return HttpResponse('ops.html') # здесь вернет шаблон
 
-#def instructors (request):
- #   return HttpResponse('instructors page') # при переходе по ссылке instructors выдаст этот текст
+#def instructor (request):
+ #   return HttpResponse('instructor page') # при переходе по ссылке instructor выдаст этот текст
 # Create your views here.

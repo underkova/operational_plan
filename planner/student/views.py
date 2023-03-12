@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from .models import students
-from .models import students
+from .models import student
+from .models import student
 from django.shortcuts import render
 
 def student_list(request):
-    student_names = students.objects.all().order_by('name')
+    student_names = student.objects.all().order_by('name')
     context = {'student_names': student_names}
     return render(request, 'planner.html', context)
 

@@ -1,15 +1,17 @@
 from django.db import models
 
 
-class students(models.Model):
+class student(models.Model):
     name = models.CharField('ФИО', max_length=100)
     group = models.CharField('Группа', max_length=10)
 
     class Meta:
-        db_table = 'students'
+        db_table = 'student'
 
     def __str__(self):
         return self.name
+
+
 
 
 class Meta:
@@ -17,12 +19,12 @@ class Meta:
     verbose_name_plural = 'Студенты'  # вот эта штука не работает
 
 
-class groups(models.Model):
+class group(models.Model):
     group_number = models.CharField('Номер группы', max_length=10)
 
 class exercise(models.Model):
-    exercise_code = models.CharField('Шифр', max_length=100)
     exercise_name = models.CharField('Название', max_length=10000)
+    exercise_code = models.CharField('Шифр', max_length=100)
     total_time = models.TimeField('Полетное время', max_length=100)
     instrument_time = models.TimeField('Приборное время', max_length=100)
     night_time = models.TimeField('Ночное время', max_length=100)
@@ -37,8 +39,19 @@ class exercise(models.Model):
     landings = models.PositiveIntegerField('Посадки', max_length=100)
     equivalent = models.PositiveIntegerField('Эквивалент', max_length=100)
 
+    def __str__(self):
+        return self.exercise_code
 
-class exercise_types(models.Model):
+
+
+
+class briefing(models.Model):
+    briefing_code = models.CharField('Шифр', max_length=100)
+    briefing_name = models.CharField('Название', max_length=1000)
+    ground_time = models.TimeField('Время наземной подготвки', max_length=100)
+
+
+class exercise_type(models.Model):
     exercise_type = models.CharField('Тип упражнения', max_length=100)
 
 
