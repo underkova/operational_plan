@@ -13,3 +13,5 @@ class instructors (models.Model):
 class instructor_type (models.Model):
     instructor_type = models.CharField('Должность', max_length=30)
 # Create your models here.
+class aircraft_types (models.Model):
+    aircraft_type = models.CharField('Тип ВС', max_length=10)
