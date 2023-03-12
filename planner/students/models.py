@@ -1,11 +1,14 @@
 from django.db import models
 
 
-class students(models.Model):  # проблема с отображением назавания таблицы (в конце автоматом ставит S)
-    name = models. CharField('ФИО', max_length=100)
-    group = models.CharField('Группа', max_length=10)  # нужно ли ссылаться на таблицу groups через столбик group_id?
+class students(models.Model):
+    name = models.CharField('ФИО', max_length=100)
+    group = models.CharField('Группа', max_length=10)
 
-    def _str_(self):
+    class Meta:
+        db_table = 'students'
+
+    def __str__(self):
         return self.name
 
 
