@@ -3,4 +3,4 @@ from django.urls import path
 
 urlpatterns = [
     # path('',views.index),
-    path('', views.instructors)] #адская скобочка
+    path('', views.instructors)]  #адская скобочка
