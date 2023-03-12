@@ -1,7 +1,7 @@
 
 from django.db import models
 
-class instructors (models.Model):
+class instructor (models.Model):
     instructor_name = models.CharField('ФИО', max_length=100)
     instructor_login = models.CharField('Логин', max_length=100)
     instructor_password = models.CharField('Пароль', max_length=100)
@@ -13,5 +13,5 @@ class instructors (models.Model):
 class instructor_type (models.Model):
     instructor_type = models.CharField('Должность', max_length=30)
 # Create your models here.
-class aircraft_types (models.Model):
+class aircraft_type (models.Model):
     aircraft_type = models.CharField('Тип ВС', max_length=10)
