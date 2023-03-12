@@ -10,7 +10,7 @@ def student_list(request):
     return render(request, 'planner.html', context)
 
 def index (request):
-    return HttpResponse ('main page') #будет просто текст
+    return HttpResponse('main page') #будет просто текст
 
 def about (request):
     return HttpResponse('description page') #тоже текст
