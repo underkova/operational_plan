@@ -22,6 +22,9 @@ class Meta:
 class group(models.Model):
     group_number = models.CharField('Номер группы', max_length=10)
 
+    def __str__(self):
+        return self.group_number
+
 class exercise(models.Model):
     exercise_name = models.CharField('Название', max_length=10000)
     exercise_code = models.CharField('Шифр', max_length=100)
@@ -50,9 +53,15 @@ class briefing(models.Model):
     briefing_name = models.CharField('Название', max_length=1000)
     ground_time = models.TimeField('Время наземной подготвки', max_length=100)
 
+    def __str__(self):
+        return self.briefing_code
+
 
 class exercise_type(models.Model):
     exercise_type = models.CharField('Тип упражнения', max_length=100)
+
+    def __str__(self):
+        return self.exercise_type
 
 
 
