@@ -1,0 +1,12 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul>
+{% for instructor in instructors %}
+    <li>{{ instructor.instructor_name }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}
