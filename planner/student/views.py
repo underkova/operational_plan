@@ -4,6 +4,9 @@ from .models import student
 from .models import student
 from django.shortcuts import render
 from .models import exercise
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def student_list(request):
     student_names = student.objects.all().order_by('name')
     context = {'student_names': student_names}

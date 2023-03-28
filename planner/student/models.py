@@ -57,6 +57,7 @@ class briefing(models.Model):
         return self.briefing_code
 
 
+
 class exercise_type(models.Model):
     exercise_type = models.CharField('Тип упражнения', max_length=100)
 
