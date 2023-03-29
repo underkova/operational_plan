@@ -8,10 +8,10 @@ def index (request):
     return HttpResponse ('main page')
 
 def about (request):
-    return HttpResponse('description page')
+    return render(request, 'main.html')
 
-def students (request):
-    return HttpResponse('ops.html') # здесь вернет шаблон
+# def students (request):
+#     return HttpResponse('ops.html') # по моему это бесполезная строчка
 
 #def instructor (request):
  #   return HttpResponse('instructor page') # при переходе по ссылке instructor выдаст этот текст

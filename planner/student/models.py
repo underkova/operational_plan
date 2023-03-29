@@ -7,6 +7,9 @@ class student(models.Model):
 
     class Meta:
         db_table = 'student'
+        verbose_name = 'Студент'
+        verbose_name_plural = 'Студенты'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -14,9 +17,7 @@ class student(models.Model):
 
 
 
-class Meta:
-    verbose_name = 'Студент'
-    verbose_name_plural = 'Студенты'  # вот эта штука не работает
+
 
 
 class group(models.Model):
