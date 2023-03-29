@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def student_list(request):
     student_names = student.objects.all().order_by('name')
-    context = {'student_names': student_names}
+    context = {'students': student_names}
     return render(request, 'ops_stud.html', context)
 
 def index (request):
@@ -19,6 +19,6 @@ def about (request):
     return HttpResponse('description page')
 
 def exercise_list(request):
-    exercise_codes = exercise.objects.all()
-    context2 = {' exercises': exercise_codes}
+    exercises = exercise.objects.all().order_by('exercise_code')
+    context2 = {'exercises': exercises}
     return render(request, 'ops.html', context2)

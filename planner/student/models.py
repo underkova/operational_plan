@@ -26,6 +26,11 @@ class group(models.Model):
     def __str__(self):
         return self.group_number
 
+    class Meta:
+        verbose_name = 'Группа'
+        verbose_name_plural = 'Группы'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        ordering = ['group_number']
+
 class exercise(models.Model):
     exercise_name = models.CharField('Название', max_length=10000)
     exercise_code = models.CharField('Шифр', max_length=100)
@@ -43,6 +48,10 @@ class exercise(models.Model):
     landings = models.PositiveIntegerField('Посадки', max_length=100)
     equivalent = models.PositiveIntegerField('Эквивалент', max_length=100)
 
+    class Meta:
+        verbose_name = 'Упражнение'
+        verbose_name_plural = 'Упражнения'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        ordering = ['exercise_code']
     def __str__(self):
         return self.exercise_code
 
@@ -54,6 +63,10 @@ class briefing(models.Model):
     briefing_name = models.CharField('Название', max_length=1000)
     ground_time = models.TimeField('Время наземной подготвки', max_length=100)
 
+    class Meta:
+        verbose_name = 'Наземная подготовка'
+        verbose_name_plural = 'Наземные подготовки'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        ordering = ['briefing_code']
     def __str__(self):
         return self.briefing_code
 
@@ -62,6 +75,10 @@ class briefing(models.Model):
 class exercise_type(models.Model):
     exercise_type = models.CharField('Тип упражнения', max_length=100)
 
+    class Meta:
+        verbose_name = 'Тип упражнения'
+        verbose_name_plural = 'Типы упражнений'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        ordering = ['exercise_type']
     def __str__(self):
         return self.exercise_type
 

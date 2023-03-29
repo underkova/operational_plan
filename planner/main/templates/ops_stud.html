@@ -7,8 +7,8 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <select class="form-select" id="ExSelect">
-                                {% for instructor in instructors %}
-                                    <option>{{ student.student_name }}</option>
+                                {% for exercise in exercises %}
+                                    <option>{{ exercise.exercise_code }}</option>
                                 {% endfor %}
                             </select>
                             <label for="ExSelect">Упражнение</label>
@@ -17,8 +17,8 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <select class="form-select" id="StudSelect">
-                                {% for student in student_names %}
-                                    <option>{{ student.student_name }}</option>
+                                {% for student in students %}
+                                    <option>{{ student.name }}</option>
                                 {% endfor %}
                             </select>
                             <label for="StudSelect">Студент</label>
