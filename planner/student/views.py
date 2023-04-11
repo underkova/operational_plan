@@ -1,24 +1,25 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 from .models import student
-from .models import student
 from django.shortcuts import render
+from .models import briefing
 from .models import exercise
 from django.contrib.auth.decorators import login_required
 
+__all__ = (
+    'ops', 'test',
+)
+
 @login_required
-def student_list(request):
+def ops(request):
     student_names = student.objects.all().order_by('name')
-    context = {'students': student_names}
-    return render(request, 'ops_stud.html', context)
+    brif = briefing.objects.all()
+    ex = exercise.objects.all()
+    context = {'students': student_names, 'briefings': brif, 'exercises': ex,}
+    return render(request, 'students.html', context)
 
-def index (request):
-    return HttpResponse ('main page')
-
-def about (request):
-    return HttpResponse('description page')
-
-def exercise_list(request):
-    exercises = exercise.objects.all().order_by('exercise_code')
-    context2 = {'exercises': exercises}
-    return render(request, 'ops.html', context2)
+def test(request, pk=None):
+    
+    brif = briefing.objects.all()
+    context1 = {'briefing': brif}
+    return render(request, 'main_tpl.html', context1)
