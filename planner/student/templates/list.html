@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Список студентов{% endblock %}
+
+{% block content %}
+<div class="row mt-5">
+    <div class="row">
+        <h1 class="col-md-8 mx-auto">Список студентов</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mx-auto my-2">
+            <table class="table table-striped">
+                {% for stud in student %}
+                <tr>
+                    <td><a href="{% url 'student:detail' pk=stud.pk %}">{{stud.name}}</a></td>
+                    <td>
+                        <a href="{% url 'student:update' pk=stud.pk %}">
+                            <button class="btn btn-primary" type="submit" >Редактировать</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{% url 'student:delete' pk=stud.pk %}">
+                            <button class="btn btn-danger" type="submit" >Удалить</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <div class="col-md-8 mx-auto">
+        <h5 class="col-md-4 ">Добавить нового студента</h5>
+    </div>
+    <div class="col-md-8  mx-auto">
+        <div class="col-md-4">
+            <form action="" method="post"> {% csrf_token %}
+            {{ form.as_p }}
+            <input class="btn btn-primary" type="submit" value="Добавить">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

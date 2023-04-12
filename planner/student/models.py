@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 
 class student(models.Model):
     name = models.CharField('ФИО', max_length=100)
@@ -8,12 +8,13 @@ class student(models.Model):
     class Meta:
         db_table = 'student'
         verbose_name = 'Студент'
-        verbose_name_plural = 'Студенты'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        verbose_name_plural = 'Студенты'
         ordering = ['name']
 
     def __str__(self):
         return self.name
-
+    def get_absolute_url(self):
+        return reverse('student:detail', kwargs={'pk': self.pk})
 
 
 
@@ -28,7 +29,7 @@ class group(models.Model):
 
     class Meta:
         verbose_name = 'Группа'
-        verbose_name_plural = 'Группы'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        verbose_name_plural = 'Группы'
         ordering = ['group_number']
 
 class exercise(models.Model):
@@ -50,7 +51,7 @@ class exercise(models.Model):
 
     class Meta:
         verbose_name = 'Упражнение'
-        verbose_name_plural = 'Упражнения'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        verbose_name_plural = 'Упражнения'
         ordering = ['exercise_code']
     def __str__(self):
         return self.exercise_code
@@ -65,10 +66,11 @@ class briefing(models.Model):
 
     class Meta:
         verbose_name = 'Наземная подготовка'
-        verbose_name_plural = 'Наземные подготовки'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        verbose_name_plural = 'Наземные подготовки'
         ordering = ['briefing_code']
     def __str__(self):
         return self.briefing_code
+
 
 
 
@@ -77,7 +79,7 @@ class exercise_type(models.Model):
 
     class Meta:
         verbose_name = 'Тип упражнения'
-        verbose_name_plural = 'Типы упражнений'  # вот эта штука не работает (Потому что эта штука должна быть внутри класса, а не вне. Теперь все работает
+        verbose_name_plural = 'Типы упражнений'
         ordering = ['exercise_type']
     def __str__(self):
         return self.exercise_type

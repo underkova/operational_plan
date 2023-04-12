@@ -5,9 +5,15 @@ from django.shortcuts import render
 from .models import briefing
 from .models import exercise
 from django.contrib.auth.decorators import login_required
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
+from .forms import StudForm
 
 __all__ = (
-    'ops', 'test',
+    'ops', 'list', 'StudDetailView', 'StudCreateView', 'StudUpdateView', 'StudDeleteView'
 )
 
 @login_required
@@ -18,8 +24,32 @@ def ops(request):
     context = {'students': student_names, 'briefings': brif, 'exercises': ex,}
     return render(request, 'students.html', context)
 
-def test(request, pk=None):
-    
-    brif = briefing.objects.all()
-    context1 = {'briefing': brif}
-    return render(request, 'main_tpl.html', context1)
+def list(request, pk=None):
+    if request.method == 'POST':
+        form = StudForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            form.save()
+    form = StudForm()
+    stud = student.objects.all()
+    context = {'student': stud, 'form': form}
+    return render(request, 'list.html', context)
+
+class StudDetailView(DetailView):
+    queryset = student.objects.all()
+    template_name = 'detail.html'
+
+class StudCreateView(CreateView):
+    model = student
+    form_class = StudForm
+    template_name = 'create.html'
+
+class StudUpdateView(UpdateView):
+    model = student
+    form_class = StudForm
+    template_name = 'update.html'
+    success_url = reverse_lazy('student:list')
+class StudDeleteView(DeleteView):
+    model = student
+    template_name = 'delete.html'
+    success_url = reverse_lazy('student:list')
