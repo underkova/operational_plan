@@ -4,6 +4,7 @@ from .models import student
 from django.shortcuts import render
 from .models import briefing
 from .models import exercise
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -32,7 +33,10 @@ def list(request, pk=None):
             form.save()
     form = StudForm()
     stud = student.objects.all()
-    context = {'student': stud, 'form': form}
+    lst = Paginator(stud, 2)
+    page_number = request.GET.get('page')
+    page_obj = lst.get_page(page_number)
+    context = {'page_obj': page_obj, 'form': form}
     return render(request, 'list.html', context)
 
 class StudDetailView(DetailView):
