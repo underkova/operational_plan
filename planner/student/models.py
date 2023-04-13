@@ -1,8 +1,10 @@
 from django.db import models
 from django.urls import reverse
 
+
 class student(models.Model):
     name = models.CharField('ФИО', max_length=100)
+    log = models.ManyToManyField('exercise')
     group = models.ForeignKey('student.group', on_delete=models.CASCADE,
                              related_name='from_group_set',
                              verbose_name='Группа', default=1)
@@ -45,7 +47,7 @@ class exercise(models.Model):
     PIC_time = models.TimeField('Время КВС', max_length=100)
     PIC_time_enroute = models.TimeField('Время КВС по маршруту', max_length=100)
     PIC_night_time = models.TimeField('Время КВС ночью', max_length=100)
-    ground_time = models.TimeField('Время наземной подготвки', max_length=100)
+    description = models.TextField('Описание упражнения', default='')
     exercise_type = models.CharField('Тип упражнения', max_length=100)
     approaches = models.PositiveIntegerField('Заходы')
     landings = models.PositiveIntegerField('Посадки')

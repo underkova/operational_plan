@@ -1,16 +1,18 @@
-
 from django.db import models
+from student.models import student
 
-class instructor (models.Model):
+class instructor(models.Model):
     instructor_name = models.CharField('ФИО', max_length=100)
     instructor_login = models.CharField('Логин', max_length=100)
     instructor_password = models.CharField('Пароль', max_length=100)
-    instructor_flight_time = models.TimeField('Полетное время', max_length=100)
+    instructor_flight_time = models.DurationField('Полетное время', default='0')
     aircraft_type = models.CharField('Тип ВС', max_length=10)
     instructor_type = models.CharField('Должность', max_length=30)
+    list = models.ManyToManyField(student, related_name='stud_list', default='1')
 
     def __str__(self):
-        return self.instructor_name
+        hours, minutes = divmod(self.instructor_flight_time.total_seconds() // 60, 60)
+        return f"{hours}:{minutes:02}"
     class Meta:
         verbose_name = 'Инструктор'
         verbose_name_plural = 'Инструктора'
@@ -28,7 +30,7 @@ class instructor_type (models.Model):
         verbose_name_plural = 'Должности'
         ordering = ['instructor_type']
 
-class aircraft_type (models.Model):
+class aircraft_type(models.Model):
     aircraft_type = models.CharField('Тип ВС', max_length=10)
 
     class Meta:
