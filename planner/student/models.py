@@ -3,7 +3,9 @@ from django.urls import reverse
 
 class student(models.Model):
     name = models.CharField('ФИО', max_length=100)
-    group = models.CharField('Группа', max_length=10)
+    group = models.ForeignKey('student.group', on_delete=models.CASCADE,
+                             related_name='from_group_set',
+                             verbose_name='Группа', default=1)
 
     class Meta:
         db_table = 'student'
@@ -12,7 +14,7 @@ class student(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return self.name
+        return f'{self.name}, гр.{self.group.group_number}'
     def get_absolute_url(self):
         return reverse('student:detail', kwargs={'pk': self.pk})
 
@@ -45,9 +47,9 @@ class exercise(models.Model):
     PIC_night_time = models.TimeField('Время КВС ночью', max_length=100)
     ground_time = models.TimeField('Время наземной подготвки', max_length=100)
     exercise_type = models.CharField('Тип упражнения', max_length=100)
-    approaches = models.PositiveIntegerField('Заходы', max_length=100)
-    landings = models.PositiveIntegerField('Посадки', max_length=100)
-    equivalent = models.PositiveIntegerField('Эквивалент', max_length=100)
+    approaches = models.PositiveIntegerField('Заходы')
+    landings = models.PositiveIntegerField('Посадки')
+    equivalent = models.PositiveIntegerField('Эквивалент')
 
     class Meta:
         verbose_name = 'Упражнение'
