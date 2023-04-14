@@ -1,6 +1,7 @@
 {% load static %}
 {% url 'student:plan' as student_plan_url%}
-{% url 'student:list' as student_test_url%}
+{% url 'student:list' as student_list_url%}
+{% url 'instructor:home' as instructor_home_url%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +27,13 @@
                         <i class="fal fa-clipboard-list"></i> Летная смена
                     </a>
                 </li>
-                <li class="{% if request.path == student_test_url%}active{% endif %}"><a href="{% url 'student:list'%}" class="text-decoration-none d-flex justify-content-between d-block px-3 py-2">
+                <li class="{% if request.path == student_list_url%}active{% endif %}"><a href="{% url 'student:list'%}" class="text-decoration-none d-flex justify-content-between d-block px-3 py-2">
                     <span><i class="fal fa-poll-people"></i> Список студентов</span>
                     <span class="bg-danger opacity-75 rounded-pill text-white py-0 px-2">03</span>
                 </a></li>
-                <li><a href="#" class="text-decoration-none d-block px-3 py-2"><i class="fal fa-calendar-alt"></i> Продвиженка</a></li>
+                <li class="{% if request.path == instructor_home_url%}active{% endif %}"><a href="{% url 'instructor:home'%}" class="text-decoration-none d-block px-3 py-2"><i class="fal fa-user-clock"></i> Инструкторы</a></li>
                 <li><a href="#" class="text-decoration-none d-flex justify-content-between d-block px-3 py-2">
-                    <span><i class="fal fa-user-clock"></i> Налёт инструктора</span>
+                    <span><i class="fal fa-calendar-alt"></i> Налёт инструктора</span>
                     <span class="bg-warning opacity-75 rounded-pill text-white py-0 px-2">01</span>
                 </a></li>
                 <li><a href="#" class="text-decoration-none d-block px-3 py-2"><i class="fal fa-books"></i> Летные книжки</a></li>

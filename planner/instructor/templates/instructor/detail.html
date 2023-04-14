@@ -14,13 +14,13 @@
                 <th scope="col">ФИО</th>
             </tr>
             </thead>
+            {% for stud in instructor.list.all %}
             <tr>
-                {% for stud in instructor.list.all %}
                 <td>
                     {{stud}}
                 </td>
-                {% endfor %}
             </tr>
+            {% endfor %}
         </table>
     <div class="row">
       <div class="">
