@@ -73,7 +73,7 @@ def instructor_list(request):
             form.save()
     form = InstrForm()
     Instr = instructor.objects.all()
-    lst = Paginator(Instr, 2)
+    lst = Paginator(Instr, 4)
     page_number = request.GET.get('page')
     page_obj = lst.get_page(page_number)
     context = {'page_obj':page_obj, 'form': form}

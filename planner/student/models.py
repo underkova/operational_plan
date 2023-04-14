@@ -39,16 +39,18 @@ class group(models.Model):
 class exercise(models.Model):
     exercise_name = models.CharField('Название', max_length=10000)
     exercise_code = models.CharField('Шифр', max_length=100)
-    total_time = models.TimeField('Полетное время', max_length=100)
-    instrument_time = models.TimeField('Приборное время', max_length=100)
-    night_time = models.TimeField('Ночное время', max_length=100)
-    copilot_time = models.TimeField('Время ВП', max_length=100)
-    solo_time = models.TimeField('Время самостоятельно', max_length=100)
-    PIC_time = models.TimeField('Время КВС', max_length=100)
-    PIC_time_enroute = models.TimeField('Время КВС по маршруту', max_length=100)
-    PIC_night_time = models.TimeField('Время КВС ночью', max_length=100)
+    total_time = models.DurationField('Полетное время', default='0')
+    instrument_time = models.DurationField('Приборное время', default='0')
+    night_time = models.DurationField('Ночное время', default='0')
+    copilot_time = models.DurationField('Время ВП', default='0')
+    solo_time = models.DurationField('Время самостоятельно', default='0')
+    PIC_time = models.DurationField('Время КВС', default='0')
+    PIC_time_enroute = models.DurationField('Время КВС по маршруту', default='0')
+    PIC_night_time = models.DurationField('Время КВС ночью', default='0')
     description = models.TextField('Описание упражнения', default='')
-    exercise_type = models.CharField('Тип упражнения', max_length=100)
+    exercise_type = models.ForeignKey('student.exercise_type', on_delete=models.CASCADE,
+                                      related_name='from_exercise_type_set',
+                                      verbose_name='Тип упражнения', default=1)
     approaches = models.PositiveIntegerField('Заходы')
     landings = models.PositiveIntegerField('Посадки')
     equivalent = models.PositiveIntegerField('Эквивалент')
@@ -66,7 +68,7 @@ class exercise(models.Model):
 class briefing(models.Model):
     briefing_code = models.CharField('Шифр', max_length=100)
     briefing_name = models.CharField('Название', max_length=1000)
-    ground_time = models.TimeField('Время наземной подготвки', max_length=100)
+    ground_time = models.DurationField('Время наземной подготвки', default='0')
 
     class Meta:
         verbose_name = 'Наземная подготовка'

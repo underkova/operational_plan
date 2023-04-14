@@ -13,4 +13,4 @@ class InstrForm(forms.ModelForm):
 
     class Meta:
         model = instructor
-        fields = ('list',)
+        fields = '__all__'

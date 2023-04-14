@@ -6,8 +6,12 @@ class instructor(models.Model):
     instructor_login = models.CharField('Логин', max_length=100)
     instructor_password = models.CharField('Пароль', max_length=100)
     instructor_flight_time = models.DurationField('Полетное время', default='0')
-    aircraft_type = models.CharField('Тип ВС', max_length=10)
-    instructor_type = models.CharField('Должность', max_length=30)
+    aircraft_type = models.ForeignKey('instructor.aircraft_type', on_delete=models.CASCADE,
+                              related_name='from_aircraft_set',
+                              verbose_name='Тип ВС', default=1)
+    instructor_type = models.ForeignKey('instructor.instructor_type', on_delete=models.CASCADE,
+                                      related_name='from_instructor_type_set',
+                                      verbose_name='Должность', default=1)
     list = models.ManyToManyField(student, related_name='stud_list', default='1')
 
     def __str__(self):
@@ -19,7 +23,7 @@ class instructor(models.Model):
         ordering = ['instructor_name']
 
 
-class instructor_type (models.Model):
+class instructor_type(models.Model):
     instructor_type = models.CharField('Должность', max_length=30)
 
     def __str__(self):
