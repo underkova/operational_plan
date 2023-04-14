@@ -25,7 +25,7 @@ def ops(request):
     brif = briefing.objects.all()
     ex = exercise.objects.all()
     context = {'students': student_names, 'briefings': brif, 'exercises': ex, }
-    return render(request, 'students.html', context)
+    return render(request, 'student/students.html', context)
 
 
 def list(request, pk=None):
@@ -40,18 +40,18 @@ def list(request, pk=None):
     page_number = request.GET.get('page')
     page_obj = lst.get_page(page_number)
     context = {'page_obj': page_obj, 'form': form}
-    return render(request, 'list.html', context)
+    return render(request, 'student/list.html', context)
 
 
 class StudDetailView(DetailView):
     queryset = student.objects.all()
-    template_name = 'detail.html'
+    template_name = 'student/detail.html'
 
 
 class StudCreateView(SuccessMessageMixin, CreateView):
     model = student
     form_class = StudForm
-    template_name = 'create.html'
+    template_name = 'student/create.html'
     success_url = reverse_lazy('student:list')
     success_message = "Студент успешно создан"
 
@@ -61,13 +61,13 @@ class StudCreateView(SuccessMessageMixin, CreateView):
 class StudUpdateView(SuccessMessageMixin, UpdateView):
     model = student
     form_class = StudForm
-    template_name = 'update.html'
+    template_name = 'student/update.html'
     success_url = reverse_lazy('student:list')
     success_message = "Студент успешно отредактирован"
 
 
 class StudDeleteView(SuccessMessageMixin, DeleteView):
     model = student
-    template_name = 'delete.html'
+    template_name = 'student/delete.html'
     success_url = reverse_lazy('student:list')
     success_message = "Студент успешно удален"

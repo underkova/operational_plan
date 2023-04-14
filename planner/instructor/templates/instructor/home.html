@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Инструктор{% endblock %}
+
+{% block content %}
+
+<div class="mt-5">
+    <h1 class="col-md-8 mx-auto">Список инструкторов</h1>
+
+    <div class="col-md-8 mx-auto my-2">
+        <table class="table table-striped">
+            <thead class="">
+            <tr>
+                <th scope="col">ФИО</th>
+            </tr>
+            </thead>
+            {% for instr in page_obj %}
+            <tr>
+                <td colspan="3">
+                    {{instr.instructor_name}}
+                </td>
+            </tr>
+            <tr>
+                {% for stud in instr.list.all %}
+                    <td>
+                        {{stud}}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <nav class="col-md-8 mx-auto" aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                {% if page_obj.has_previous %}
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущий</a>
+                {% endif %}
+            </li>
+            {% for page in page_obj.paginator.page_range %}
+            <li class="page-item {% if page == page_obj.number %} active  {% endif %}">
+                <a class="page-link" href="?page={{page}}">{{page}}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующий</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+<h1>Выберите студента</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
