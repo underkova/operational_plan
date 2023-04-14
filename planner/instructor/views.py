@@ -11,22 +11,13 @@ from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
 from django.urls import reverse_lazy
-from instructor.forms import InstrForm
+from instructor.forms import InstrForm, StudForm
 
-__all__ = ('instructor_list', 'list',
-           # 'ops', 'InstrDetailView', 'InstrCreateView', 'InstrUpdateView', 'InstrDeleteView'
+__all__ = ('instructor_list', 'list', 'InstrUpdateView',  'InstrDetailView', 'InstrAddStud', 'InstrDeleteView'
 )
 
 
 @login_required
-# def ops(request):
-#     instructor_names = instructor.objects.all().order_by('name')
-#     brif = briefing.objects.all()
-#     ex = exercise.objects.all()
-#     context = {'instructors': instructor_names, 'briefings': brif, 'exercises': ex, }
-#     return render(request, 'instructor/instructors.html', context)
-
-
 def list(request, pk=None):
     Instr = instructor.objects.all()
     lst = Paginator(Instr, 2)
@@ -35,47 +26,45 @@ def list(request, pk=None):
     context = {'page_obj': page_obj,}
     return render(request, 'instructor/list.html', context)
 
-#
-# class InstrDetailView(DetailView):
-#     queryset = instructor.objects.all()
-#     template_name = 'instructor/detail.html'
-#
-#
-# class InstrCreateView(SuccessMessageMixin, CreateView):
-#     model = instructor
-#     form_class = InstrForm
-#     template_name = 'instructor/create.html'
-#     success_url = reverse_lazy('instructor:list')
-#     success_message = "Студент успешно создан"
-#
-#
-#
-#
-# class InstrUpdateView(SuccessMessageMixin, UpdateView):
-#     model = instructor
-#     form_class = InstrForm
-#     template_name = 'instructor/update.html'
-#     success_url = reverse_lazy('instructor:list')
-#     success_message = "Студент успешно отредактирован"
-#
-#
-# class InstrDeleteView(SuccessMessageMixin, DeleteView):
-#     model = instructor
-#     template_name = 'instructor/delete.html'
-#     success_url = reverse_lazy('instructor:list')
-#     success_message = "Студент успешно удален"
+class InstrDetailView(DetailView):
+    queryset = instructor.objects.all()
+    template_name = 'instructor/detail.html'
+
+class InstrAddStud(SuccessMessageMixin, CreateView):
+    model = instructor
+    form_class = InstrForm
+    template_name = 'instructor/create.html'
+    success_url = reverse_lazy('instructor:list')
+    success_message = "Студент успешно создан"
+
+class InstrUpdateView(SuccessMessageMixin, UpdateView):
+    model = instructor
+    form_class = InstrForm
+    template_name = 'instructor/update.html'
+    success_url = reverse_lazy('instructor:instructor_list')
+    success_message = "Студенты добавлены"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['instr_name'] = self.object.instructor_name  # добавляем имя инструктора в контекст
+        return context
+class InstrDeleteView(SuccessMessageMixin, DeleteView):
+    model = instructor
+    template_name = 'instructor/delete.html'
+    success_url = reverse_lazy('instructor:list')
+    success_message = "Студент успешно удален"
 
 def instructor_list(request):
-    if request.method == 'POST':
-        form = InstrForm(request.POST)
-        if form.is_valid():
-            print(form.cleaned_data)
-            form.save()
-    form = InstrForm()
+    # if request.method == 'POST':
+    #     instrform = InstrForm(request.POST)
+    #     if form.is_valid():
+    #         print(form.cleaned_data)
+    #         form.save()
+    # studform = StudForm()
+    # instrform = InstrForm()
     Instr = instructor.objects.all()
-    lst = Paginator(Instr, 4)
+    lst = Paginator(Instr, 8)
     page_number = request.GET.get('page')
     page_obj = lst.get_page(page_number)
-    context = {'page_obj':page_obj, 'form': form}
+    context = {'page_obj':page_obj}
     return render(request, 'instructor/home.html', context)
 

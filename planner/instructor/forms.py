@@ -3,14 +3,18 @@ from instructor.models import instructor
 from student.models import student
 
 
-class InstrForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        from .models import instructor
-        self.fields['list'] = forms.ModelChoiceField(queryset=student.objects.all(), label='Студент', widget=forms.Select(attrs={
-        'class': 'form-select',
-        'placeholder': 'Введите группу студента'}))
-
+class StudForm(forms.ModelForm):
+    students = forms.ModelMultipleChoiceField(queryset=student.objects.all(), label='Студент',
+                                         widget=forms.SelectMultiple(attrs={
+                                             'class': 'form-select',}))
     class Meta:
         model = instructor
-        fields = '__all__'
+        fields = 'students',
+
+class InstrForm(forms.ModelForm):
+    instructors = forms.ModelChoiceField(queryset=student.objects.all(), label='Студент', widget=forms.Select(attrs={
+    'class': 'form-select',
+    'placeholder': 'Введите группу студента'}))
+    class Meta:
+        model = instructor
+        fields = 'instructors',

@@ -1,20 +1,40 @@
 {% extends 'base.html' %}
 
-{% block title %}Подробная информация о студенте{% endblock %}
+{% block title %}Подробная информация{% endblock %}
 
 {% block content %}
 
-
-<div class="row">
-    <div class="col-md">
-      <h3>ФИО студента: {{student.name}}</h3>
-      <h5>Группа: {{student.group}}</h5>
+<div class="mt-5">
+    <div class="col-md-8 mx-auto">
+        <h3>{{instructor.instructor_name}}</h3>
+        <h5>Список студентов</h5>
+        <table class="table table-striped">
+            <thead class="">
+            <tr>
+                <th scope="col">ФИО</th>
+            </tr>
+            </thead>
+            <tr>
+                {% for stud in instructor.list.all %}
+                <td>
+                    {{stud}}
+                </td>
+                {% endfor %}
+            </tr>
+        </table>
+    <div class="row">
+      <div class="">
+        <a class="btn btn-outline-primary" href="{% url 'instructor:home' %}">Назад к списку</a>
+      </div>
     </div>
+    </div>
+
+
+
+
+
 </div>
-<div class="row">
-  <div class="col-md">
-    <a class="btn btn-outline-primary" href="{% url 'student:list' %}">Назад к списку</a>
-  </div>
-</div>
+
+
 
 {% endblock %}

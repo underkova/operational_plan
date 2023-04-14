@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Инструктор{% endblock %}
+{% block title %}Распределение{% endblock %}
 
 {% block content %}
 
 <div class="mt-5">
-    <h1 class="col-md-8 mx-auto">Список инструкторов</h1>
+    <h1 class="col-md-8 mx-auto">Распределение</h1>
 
     <div class="col-md-8 mx-auto my-2">
         <table class="table table-striped">
@@ -16,16 +16,14 @@
             </thead>
             {% for instr in page_obj %}
             <tr>
-                <td colspan="3">
-                    {{instr.instructor_name}}
+                <td>
+                     <a href="{% url 'instructor:detail' pk=instr.pk %}">{{instr.instructor_name}}</a>
                 </td>
-            </tr>
-            <tr>
-                {% for stud in instr.list.all %}
-                    <td>
-                        {{stud}}
-                    </td>
-                {% endfor %}
+                <td>
+                    <a href="{% url 'instructor:update' pk=instr.pk %}">
+                        <button class="btn btn-primary" type="submit" >Добавить студентов</button>
+                    </a>
+                </td>
             </tr>
             {% endfor %}
         </table>
@@ -50,12 +48,5 @@
             {% endif %}
         </ul>
     </nav>
-
-<h1>Выберите студента</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
 </div>
 {% endblock %}
