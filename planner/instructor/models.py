@@ -12,7 +12,7 @@ class instructor(models.Model):
     instructor_type = models.ForeignKey('instructor.instructor_type', on_delete=models.CASCADE,
                                       related_name='from_instructor_type_set',
                                       verbose_name='Должность', default=1)
-    list = models.ManyToManyField(student, related_name='stud_list', default='1')
+    list = models.ManyToManyField(student, verbose_name='Список студентов', related_name='stud_list', default='1')
 
     def __str__(self):
         hours, minutes = divmod(self.instructor_flight_time.total_seconds() // 60, 60)

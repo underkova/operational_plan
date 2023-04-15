@@ -1,19 +1,18 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
-from instructor.models import instructor
+from .models import instructor
 from django.shortcuts import render
 from student.models import briefing, exercise
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
-from django.views.generic.edit import UpdateView
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from instructor.forms import InstrForm, StudForm
+from django.contrib import messages
 
-__all__ = ('instructor_list', 'list', 'InstrUpdateView',  'InstrDetailView', 'InstrAddStud', 'InstrDeleteView'
+__all__ = ('instructor_list', 'list', 'InstrUpdateView',  'InstrDetailView', 'InstrAddStud', 'InstrDeleteView', 'instructor_assign'
 )
 
 
@@ -39,13 +38,13 @@ class InstrAddStud(SuccessMessageMixin, CreateView):
 
 class InstrUpdateView(SuccessMessageMixin, UpdateView):
     model = instructor
-    form_class = InstrForm
+    form_class = StudForm
     template_name = 'instructor/update.html'
     success_url = reverse_lazy('instructor:instructor_list')
     success_message = "Студенты добавлены"
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['instr_name'] = self.object.instructor_name  # добавляем имя инструктора в контекст
+        context['instr_name'] = self.object.instructor_name
         return context
 class InstrDeleteView(SuccessMessageMixin, DeleteView):
     model = instructor
@@ -67,4 +66,14 @@ def instructor_list(request):
     page_obj = lst.get_page(page_number)
     context = {'page_obj':page_obj}
     return render(request, 'instructor/home.html', context)
+
+def instructor_assign(request):
+    if request.method == "POST":
+        form = StudForm(request.POST)
+        a = 1
+        return render(request, 'instructor/home.html', {'form': form})
+    else:
+        form = StudForm()
+        messages.error(request, "Нет данных")
+        return render(request, 'instructor/home.html', {'form': form})
 
