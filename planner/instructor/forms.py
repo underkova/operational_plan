@@ -6,7 +6,7 @@ from student.models import student
 class StudForm(forms.ModelForm):
     students = forms.ModelMultipleChoiceField(queryset=student.objects.all(), label='Студент', required=False,
                                          widget=forms.SelectMultiple(attrs={
-                                        'class': 'form-control js-multiple',}))
+                                        'class': 'form-control',}))
     class Meta:
         model = instructor
         fields = 'students',

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import student, group, exercise, exercise_type, briefing
+from .models import student, group, exercise, exercise_type, briefing, Plan
 
 class ExerciseAdmin(admin.ModelAdmin):
     class Meta:
@@ -16,3 +16,4 @@ admin.site.register(group)
 admin.site.register(exercise, ExerciseAdmin)
 admin.site.register(exercise_type)
 admin.site.register(briefing)
+admin.site.register(Plan)

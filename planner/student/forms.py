@@ -1,5 +1,5 @@
 from django import forms
-from student.models import student
+from student.models import student, exercise
 
 
 class StudForm(forms.ModelForm):
@@ -17,3 +17,15 @@ class StudForm(forms.ModelForm):
     class Meta:
         model = student
         fields = ('name', 'group',)
+
+class PlanForm(forms.Form):
+    student = forms.ModelChoiceField(queryset=student.objects.all(), label='Студент', widget=forms.Select(attrs={
+        'class': 'form-select'}))
+    exercise = forms.ModelChoiceField(queryset=exercise.objects.all(), label='Группа', widget=forms.Select(attrs={
+        'class': 'form-select'}))
+    approaches = forms.IntegerField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        }))
+    landings = forms.IntegerField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        }))

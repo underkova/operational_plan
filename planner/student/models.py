@@ -91,4 +91,15 @@ class exercise_type(models.Model):
         return self.exercise_type
 
 
+class Plan(models.Model):
+    student = models.CharField('ФИО', max_length=100)
+    exercise = models.CharField('Шифр', max_length=100)
+    time = models.DurationField('Полетное время', default='0')
+    approaches = models.PositiveIntegerField('Заходы')
+    landings = models.PositiveIntegerField('Посадки')
 
+    class Meta:
+        verbose_name = 'Оперативный план'
+        verbose_name_plural = 'Оперативные планы'
+    def __str__(self):
+        return self.student
