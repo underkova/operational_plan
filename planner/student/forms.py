@@ -1,6 +1,6 @@
 from django import forms
 from student.models import student, exercise
-
+from datetime import timedelta
 
 class StudForm(forms.ModelForm):
     name = forms.CharField(label='ФИО', widget=forms.TextInput(attrs={
@@ -23,9 +23,25 @@ class PlanForm(forms.Form):
         'class': 'form-select'}))
     exercise = forms.ModelChoiceField(queryset=exercise.objects.all(), label='Группа', widget=forms.Select(attrs={
         'class': 'form-select'}))
-    approaches = forms.IntegerField(widget=forms.TextInput(attrs={
+    approaches = forms.IntegerField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
+        'type': 'number'
         }))
-    landings = forms.IntegerField(widget=forms.TextInput(attrs={
+    landings = forms.IntegerField(required=False, widget=forms.TextInput(attrs={
         'class': 'form-control',
+        'type': 'number'
         }))
+    time = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Введите время (чч:мм:сс)',
+    }))
+    def clean_time(self):
+        time = self.cleaned_data['time']
+        if time:
+            try:
+                hours, minutes, seconds = time.split(':')
+                duration = timedelta(hours=int(hours), minutes=int(minutes), seconds=int(seconds))
+                return duration
+            except (ValueError, TypeError):
+                raise forms.ValidationError('Некорректный формат времени. Используйте чч:мм:сс.')
+        return None

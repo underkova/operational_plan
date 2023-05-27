@@ -15,6 +15,9 @@ from django.shortcuts import redirect
 from django.db.models import Sum
 from django.db import models
 import datetime
+from django.contrib import messages
+from datetime import date
+from django.utils.translation import activate
 
 __all__ = (
     'ops', 'list', 'StudDetailView', 'StudCreateView', 'StudUpdateView', 'StudDeleteView', 'plan', 'delete_all_plans'
@@ -30,15 +33,30 @@ def ops(request):
     return render(request, 'student/students.html', context)
 
 def plan(request):
+    activate('ru')  # Активируем русскую локализацию
+    current_date = date.today()
     exercises = exercise.objects.all()
     students = student.objects.all()
     plans = Plan.objects.all()
     total_time = Plan.objects.aggregate(total_time=Sum('time'))
     total_approaches = Plan.objects.aggregate(total_approaches=Sum('approaches'))
     total_landings = Plan.objects.aggregate(total_landings=Sum('landings'))
+    total_info_per_student = Plan.objects.values('student').annotate(
+        total_time=Sum('time'),
+        approaches=Sum('approaches'),
+        landings=Sum('landings')
+    )
+    for info in total_info_per_student:
+        if info['total_time'] > datetime.timedelta(hours=4):
+            message = f"Внимание! Общее время для студента {info['student']} превышает предельное значение"
+            messages.error(request, message)
+        elif info['total_time'] > datetime.timedelta(hours=3):
+            message = f"Внимание! Общее время для студента {info['student']} превышает 3 часа"
+            messages.warning(request, message)
+
     if total_time['total_time'] is not None and total_time['total_time'] > datetime.timedelta(hours=6):
         message = 'Внимание: Общее время превышает 6 часов!'
-
+        messages.error(request, message)
     else:
         message = None
 
@@ -47,10 +65,22 @@ def plan(request):
         if form.is_valid():
             student_input = form.cleaned_data['student']
             exercise_input = form.cleaned_data['exercise']
-            approaches = form.cleaned_data['approaches']
-            landings = form.cleaned_data['landings']
             exercise_obj = exercise.objects.get(pk=exercise_input.id)
             total_time = exercise_obj.total_time
+            approaches = exercise_obj.approaches
+            landings = exercise_obj.landings
+
+            time_input = form.cleaned_data.get('time')
+            if time_input:
+                total_time = time_input
+
+            approaches_input = form.cleaned_data.get('approaches')
+            if approaches_input:
+                approaches = approaches_input
+
+            landings_input = form.cleaned_data.get('landings')
+            if landings_input:
+                landings = landings_input
             planDB = Plan(student=student_input, time=total_time, exercise=exercise_input, approaches=approaches, landings=landings)
             planDB.save()
     else:
@@ -62,7 +92,8 @@ def plan(request):
                                                      'total_time': total_time,
                                                      'total_approaches': total_approaches,
                                                      'total_landings': total_landings,
-                                                     'message': message})
+                                                     'student_info': total_info_per_student,
+                                                     'current_date': current_date,})
 
 def list(request, pk=None):
     if request.method == 'POST':

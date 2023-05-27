@@ -12,7 +12,7 @@
                     <label for="{{ form.student.id_for_label }}">Студент:</label>
                 </div>
             </div>
-             <div class="col-md">
+             <div class="col-md-2">
                 <div class="form-floating">
                     {{ form.exercise }}
                     <label for="{{ form.exercise.id_for_label }}">Упражнение:</label>
@@ -20,11 +20,17 @@
             </div>
             <div class="col-md-2">
                 <div class="form-floating">
+                    {{ form.time }}
+                    <label for="{{ form.exercise.id_for_label }}">Введите время (чч:мм:сс)</label>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-floating">
                     {{ form.approaches }}
                     <label for="{{ form.approaches.id_for_label }}">Заходов:</label>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-floating">
                     {{ form.landings }}
                     <label for="{{ form.landings.id_for_label }}">Посадок:</label>
@@ -38,7 +44,7 @@
 
     <div class="pt-5 container row g-1">
         <div>
-            <h3>План на 14.11.2022</h3>
+            <h3>План на {{ current_date }}</h3>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -69,12 +75,6 @@
                     <td>{{ total_time.total_time }}</td>
                     <td>{{ total_approaches.total_approaches }}/{{ total_landings.total_landings }}</td>
                 </tr>
-
-                {% if message %}
-                <tr>
-                    <td colspan="5" class="table-danger">{{ message }}</td>
-                </tr>
-                {% endif %}
                 </tfoot>
             </table>
             <div class="d-flex justify-content-center">
@@ -91,32 +91,26 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Студент</th>
-                    <th scope="col">Налет сегодня</th>
                     <th scope="col">Общий налет</th>
+                    <th scope="col">Зах/пос</th>
                 </tr>
                 </thead>
                 <tbody>
+
+                {% for info in student_info %}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Петров</td>
-                    <td>1:40</td>
-                    <td>1:45</td>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ info.student }}</td>
+                    <td>{{ info.total_time }}</td>
+                    <td>{{ info.approaches }}/{{ info.landings }}</td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Иванов</td>
-                    <td>1:45</td>
-                    <td>1:45</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Нестеров</td>
-                    <td>1:35</td>
-                    <td>2:10</td>
-                </tr>
+                {% endfor %}
+
+
                 </tbody>
             </table>
         </div>
     </div>
+
 
 {% endblock %}

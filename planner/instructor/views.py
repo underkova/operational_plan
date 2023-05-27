@@ -70,7 +70,6 @@ def instructor_list(request):
 def instructor_assign(request):
     if request.method == "POST":
         form = StudForm(request.POST)
-        a = 1
         return render(request, 'instructor/home.html', {'form': form})
     else:
         form = StudForm()

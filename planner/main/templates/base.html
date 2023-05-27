@@ -58,22 +58,28 @@
                 </div>
                </div>
             </nav>
-
+            <div class="w-25 messages position-absolute m-3 bottom-0 end-0">
             {% if messages %}
                 {% for message in messages %}
                     {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-                        <div class="alert position-absolute bottom-0 end-0 alert-danger alert-dismissible fade show" role="alert">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
                           {{ message }}
                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     {% else %}
-                        <div class="alert position-absolute m-3 bottom-0 end-0 alert-success alert-dismissible fade show" role="alert">
+                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
                           {{ message }}
                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}
                 {% endfor %}
             {% endif %}
+            </div>
             {% block content %} {% endblock %}
 
         </div>
