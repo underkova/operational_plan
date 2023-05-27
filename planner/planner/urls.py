@@ -21,8 +21,8 @@ admin.autodiscover()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-    path('students/', include('students.urls')),
-   path('instructors/', include('instructors.urls'))
+    path('student/', include(('student.urls', 'student'))),
+    path('instructor/', include(('instructor.urls', 'instructor'))),
 ]
 
 

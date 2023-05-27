@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Подробная информация о студенте{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md">
+      <h3>ФИО студента: {{student.name}}</h3>
+      <h5>Группа: {{student.group}}</h5>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md">
+    <a class="btn btn-outline-primary" href="{% url 'student:list' %}">Назад к списку</a>
+  </div>
+</div>
+
+{% endblock %}

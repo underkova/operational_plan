@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Список студентов{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <h1 class="col-md-8 mx-auto">Список студентов</h1>
+
+    <div class="col-md-8 mx-auto my-2">
+        <table class="table table-striped">
+            <thead class="">
+            <tr>
+                <th scope="col">ФИО</th>
+                <th scope="col">Группа</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            {% for stud in page_obj %}
+            <tr>
+                <td>
+                    <a href="{% url 'student:detail' pk=stud.pk %}">{{stud.name}}</a>
+                </td>
+                <td>
+                    <a href="{% url 'student:detail' pk=stud.pk %}">{{stud.group}}</a>
+                </td>
+                <td>
+                    <a href="{% url 'student:update' pk=stud.pk %}">
+                        <button class="btn btn-primary" type="submit" >Редактировать</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'student:delete' pk=stud.pk %}">
+                        <button class="btn btn-danger" type="submit" >Удалить</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <nav class="col-md-8 mx-auto" aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                {% if page_obj.has_previous %}
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Предыдущий</a>
+                {% endif %}
+            </li>
+            {% for page in page_obj.paginator.page_range %}
+            <li class="page-item {% if page == page_obj.number %} active  {% endif %}">
+                <a class="page-link" href="?page={{page}}">{{page}}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Следующий</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <div class="col-md-8 mx-auto">
+        <h5 class="col-md-4 ">Добавить нового студента</h5>
+    </div>
+    <div class="col-md-8 mx-auto">
+        <div class="col-md-4">
+            <form action="{% url 'student:create'%}" method="post"> {% csrf_token %}
+                {{ form.as_p }}
+                <input class="btn btn-primary" type="submit" value="Добавить">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

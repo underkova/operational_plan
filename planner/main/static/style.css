@@ -1,0 +1,112 @@
+/* login page */
+.mask {
+     position: relative;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     overflow: hidden;
+     background-attachment: fixed;
+     backdrop-filter: blur(1px);
+     /*background-color: rgba(178, 60, 253, 0.2);*/
+ }
+
+ .login-bg-image {
+     background: url('images/login-bg.jpg');
+     height: 100vh;
+     position: relative;
+     overflow: hidden;
+     background-repeat: no-repeat;
+     background-size: cover;
+     background-position: 50%;
+ }
+
+ .logon-bg {
+     background-color: #000000;
+     height: 100vh;
+ }
+
+ @media (min-width: 1200px) {
+     .bgimg {
+         background-image: none;
+     }
+ }
+
+ @media (min-width: 992px) and (max-width: 1199px) {
+     .bgimg {
+         background-image: none;
+     }
+ }
+
+ @media (min-width: 768px) and (max-width: 991px) {
+     .bgimg {
+         background-image: url('images/NightFlight.jpg');
+ /*        height: 100vh;*/
+         position: relative;
+         overflow: hidden;
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: 50%;
+     }
+ }
+
+ @media (max-width: 767px) {
+     .bgimg {
+         background-image: url('images/NightFlight.jpg');
+         /*height: 100vh;*/
+         position: relative;
+         overflow: hidden;
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: 50%;
+     }
+     #side_nav{
+        margin-left: -250px;
+        position: fixed;
+        min-height: 100vh;
+        z-index: 1;
+        transition: all 0.2s;
+    }
+     #side_nav.active{
+        margin-left:0;
+     }
+ }
+
+ @media (max-width: 480px) {
+     .bgimg {
+         background-image: url('images/NightFlight.jpg');
+         /*height: 100vh;*/
+         position: relative;
+         overflow: hidden;
+         background-repeat: no-repeat;
+         background-size: cover;
+         background-position: 50%;
+     }
+ }
+
+ /* ops page */
+ body{
+    background: #eee;
+ }
+
+ #side_nav{
+    background: #000;
+    min-width: 250px;
+    max-width: 250px;
+ }
+ .content{
+    min-height: 100vh;
+    width: 100%;
+ }
+ .sidebar li.active{
+    background: #eee;
+    border-radius: 8px;
+ }
+ .sidebar li.active a, .sidebar li.active a:hover{
+    color: #000;
+ }
+ .sidebar li a{
+    color:#fff;
+ }

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Планирование{% endblock %}
+
+{% block content %}
+<form action="{% url 'student:plan' %}" method="post" >
+    <div class="pt-5 container row g-1">
+        {% csrf_token %}
+            <div class="col-md">
+                <div class="form-floating">
+                    {{ form.student }}
+                    <label for="{{ form.student.id_for_label }}">Студент:</label>
+                </div>
+            </div>
+             <div class="col-md-2">
+                <div class="form-floating">
+                    {{ form.exercise }}
+                    <label for="{{ form.exercise.id_for_label }}">Упражнение:</label>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-floating">
+                    {{ form.time }}
+                    <label for="{{ form.exercise.id_for_label }}">Введите время (чч:мм:сс)</label>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-floating">
+                    {{ form.approaches }}
+                    <label for="{{ form.approaches.id_for_label }}">Заходов:</label>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-floating">
+                    {{ form.landings }}
+                    <label for="{{ form.landings.id_for_label }}">Посадок:</label>
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-center">
+                <input class="btn btn-primary" type="submit" value="Добавить упражнение">
+            </div>
+    </div>
+</form>
+
+    <div class="pt-5 container row g-1">
+        <div>
+            <h3>План на {{ current_date }}</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Студент</th>
+                    <th scope="col">Упражнение</th>
+                    <th scope="col">Налёт</th>
+                    <th scope="col">Зах/пос</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in plans %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ item.student }}</td>
+                    <td>{{ item.exercise }}</td>
+                    <td>{{ item.time }}</td>
+                    <td>{{ item.approaches }}/{{ item.landings }}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+                <tfoot class="table table-dark">
+                <tr>
+                    <th scope="row"></th>
+                    <td>Итого:</td>
+                    <td></td>
+                    <td>{{ total_time.total_time }}</td>
+                    <td>{{ total_approaches.total_approaches }}/{{ total_landings.total_landings }}</td>
+                </tr>
+                </tfoot>
+            </table>
+            <div class="d-flex justify-content-center">
+                <form action="{% url 'student:delete_all_plans' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Очистить план</button>
+                </form>
+            </div>
+
+            </div>
+            <h3>Итоги студентов</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Студент</th>
+                    <th scope="col">Общий налет</th>
+                    <th scope="col">Зах/пос</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for info in student_info %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ info.student }}</td>
+                    <td>{{ info.total_time }}</td>
+                    <td>{{ info.approaches }}/{{ info.landings }}</td>
+                </tr>
+                {% endfor %}
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

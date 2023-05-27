@@ -1,15 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
-def index (request):
-    return HttpResponse ('main page')
 
-def about (request):
-    return HttpResponse('description page')
+__all__ = (
+    'index',
+)
+@login_required
+def index(request):
+    return render(request, 'main.html')
 
-def students (request):
-    return HttpResponse('planner.html') # здесь вернет шаблон
-
-#def instructors (request):
- #   return HttpResponse('instructors page') # при переходе по ссылке instructors выдаст этот текст
-# Create your views here.

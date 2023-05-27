@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="col-md-4">
+        <form action="{{action}}" method="post"> {% csrf_token %}
+        {{ form.as_p }}
+            <button class="btn btn-primary" type="submit" >{{ button }}</button>
+            <a class="btn btn-outline-primary" href="{% url 'instructor:home' %}">Назад к списку</a>
+        </form>
+    </div>
+</div>
