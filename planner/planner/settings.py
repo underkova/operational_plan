@@ -22,12 +22,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-r5sr6*mvn#$ozxxxoydp+p5i_!353^7dp)i_&x+8a9o!h49&mc'
+#SECRET_KEY = 'django-insecure-r5sr6*mvn#$ozxxxoydp+p5i_!353^7dp)i_&x+8a9o!h49&mc'
+
+try:
+    SECRET_KEY = os.environ["SECRET_KEY"]
+except KeyError as e:
+    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'flight-planner.online', ]
+
+#ALLOWED_HOSTS = [
+#    '*',
+#    'flight-planner.online',
+#]
 
 
 # Application definition
@@ -121,7 +131,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
+
+STATIC_URL = 'static/'
+
+STATIC_ROOT = '/home/work/www/static'
+
+#if DEBUG:
+#    STATICFILES_DIRS = [
+#       os.path.join(BASE_DIR, 'static')
+#    ]
+#else:
+#    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+#STATICFILES_DIRS = [
+#    BASE_DIR / 'static',
+#    BASE_DIR / "static/registration",
+#]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
