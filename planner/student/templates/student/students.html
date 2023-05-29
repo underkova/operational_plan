@@ -5,6 +5,7 @@
 {% block content %}
 <form action="{% url 'student:plan' %}" method="post" >
     <div class="pt-5 container row g-1">
+        <h1>Планирование</h1>
         {% csrf_token %}
             <div class="col-md">
                 <div class="form-floating">

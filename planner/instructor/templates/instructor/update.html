@@ -6,16 +6,10 @@
 {% url 'instructor:assign' as ACTION %}
 <div class="mt-5">
     <h1 class="col-md-8 mx-auto">{{ instr_name }}</h1>
-    <div class="col-md-8 mx-auto my-2">
+    <div class="col-md-8 mx-auto">
         {% include 'form.html' with button='Редактировать' action=ACTION %}
     </div>
 
-    <div class="col-md-4">
-        <form action="{% url 'instructor:add'%}" method="post"> {% csrf_token %}
-            {{ StudForm.as_p }}
-            <input class="btn btn-primary" type="submit" value="Добавить">
-        </form>
-    </div>
 </div>
 
 {% endblock %}
